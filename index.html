@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>カタカナゲーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>カタカナを説明しよう！</h1>
-  <div id="info">ラウンド: <span id="round">1</span>　|　ターン: <span id="turn">0</span></div>
+  <div id="info">ラウンド: <span id="round">1</span>　|　Turns: <span id="turn">0</span></div>
   <div id="explaining"></div>
-  <div id="timer">15</div>
+  <div id="countdown" class="countdown">3</div>
+  <div id="timer">30</div>
   <div id="word">***</div>
 
   <div class="button-group">
     <button onclick="startRound()">次の言葉</button>
-    <!-- <button onclick="hideWord()">隠す</button> -->
+    <button onclick="skipWord()">スキップ</button>
+    <button onclick="hideWord()">隠す</button>
     <button onclick="addPoint()">ポイント追加</button>
     <button onclick="correctAnswer()">正解！ポイント追加</button>
     <button onclick="showHint()">ヒントを見る</button>
@@ -30,9 +33,9 @@
   <div id="teams"></div>
 
   <canvas id="confettiCanvas" class="confetti"></canvas>
-  <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_cowbell.ogg"></audio>
-  <audio id="correct-sound" src="https://actions.google.com/sounds/v1/cartoon/siren_whistle.ogg"></audio>
+  <audio id="alarm-sound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
+  <audio id="correct-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
