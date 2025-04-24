@@ -177,6 +177,10 @@ function addPoint() {
   }
 }
 
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
 function updateCounters() {
   turn++;
   document.getElementById('turn').innerText = turn;
