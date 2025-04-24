@@ -59,6 +59,21 @@ button:hover {
   background-color: #45a049;
 }
 
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 100%;
+  margin: 10px 0;
+}
+
+.button-group button {
+  flex: 1 1 45%;
+  min-width: 120px;
+  font-size: 1em;
+}
+
 #teams {
   margin-top: 20px;
   display: flex;
@@ -127,5 +142,9 @@ body.mobile button {
   .team {
     width: 45%;
     margin: 5px;
+  }
+  .button-group button {
+    flex: 1 1 80%;
+    font-size: 1.1em;
   }
 }
