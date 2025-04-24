@@ -55,10 +55,6 @@ button {
   max-width: 100%;
 }
 
-button:hover {
-  background-color: #45a049;
-}
-
 .button-group {
   display: flex;
   flex-wrap: wrap;
@@ -72,6 +68,10 @@ button:hover {
   flex: 1 1 45%;
   min-width: 120px;
   font-size: 1em;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 
 #teams {
