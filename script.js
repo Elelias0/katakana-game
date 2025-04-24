@@ -48,6 +48,11 @@ let currentWord = "";
 const teams = [];
 
 // ==== Funciones ====
+
+if (isMobileDevice()) {
+  document.body.classList.add("mobile");
+}
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
