@@ -87,6 +87,10 @@ function startTimer(seconds, onEnd) {
 }
 
 function startRound() {
+  if (teams.length === 0) {
+    alert("Please add at least one team before starting the round.");
+    return;
+  }
   if (availableWords.length === 0) {
     availableWords = shuffle([...allWords]);
     alert("All words used. Reshuffling!");
