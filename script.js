@@ -159,7 +159,7 @@ function correctAnswer() {
 
 function showHint() {
   const hint = definitions[currentWord];
-  document.getElementById("hint").innerText = hint ? `Hint: ${hint}` : "ヒントはありません。";
+  document.getElementById("hint").innerText = hint ? `ヒント: ${hint}` : "ヒントはありません。";
 }
 
 function hideWord() {
@@ -191,7 +191,7 @@ function renderTeams() {
     div.style.backgroundColor = team.color;
     div.innerHTML = `
       <div class="team-name">${team.name}</div>
-      <div class="score" id="score-${index}">Points: ${team.score}</div>
+      <div class="score" id="score-${index}">ポイント: ${team.score}</div>
     `;
     teamsDiv.appendChild(div);
   });
