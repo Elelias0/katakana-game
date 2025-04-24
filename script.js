@@ -113,7 +113,7 @@ function startRound() {
   highlightCurrentTeam(-1);
   startCountdown(() => {
     document.getElementById('word').innerText = currentWord;
-    startTimer(15, () => {
+    startTimer(25, () => {
       guessIndex = 0;
       nextGuessPhase();
     });
@@ -134,7 +134,7 @@ function nextGuessPhase() {
   const teamIndex = guessOrder[guessIndex];
   document.getElementById('word').innerText = `→ ${teams[teamIndex].name}'s turn`;
   highlightCurrentTeam(teamIndex);
-  startTimer(5, () => {
+  startTimer(8, () => {
     guessIndex++;
     nextGuessPhase();
   });
@@ -161,7 +161,7 @@ function showHint() {
 function hideWord() {
   clearInterval(timer);
   document.getElementById('word').innerText = "***";
-  document.getElementById('timer').innerText = 15;
+  document.getElementById('timer').innerText = 25;
 }
 
 function addTeam() {
