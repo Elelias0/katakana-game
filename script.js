@@ -47,20 +47,28 @@ let guessIndex = 0;
 let currentWord = "";
 const teams = [];
 
-// ==== Funciones ====
-function isMobileDevice() {
-  return /Mobi|Android/i.test(navigator.userAgent);
-}
-if (isMobileDevice()) {
-  document.body.classList.add("mobile");
-}
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+}
+
+function startCountdown(callback) {
+  const countdownEl = document.getElementById("countdown");
+  countdownEl.style.display = "block";
+  let count = 3;
+  countdownEl.innerText = count;
+  const interval = setInterval(() => {
+    count--;
+    countdownEl.innerText = count;
+    if (count === 0) {
+      clearInterval(interval);
+      countdownEl.style.display = "none";
+      callback();
+    }
+  }, 1000);
 }
 
 function startTimer(seconds, onEnd) {
@@ -81,42 +89,52 @@ function startTimer(seconds, onEnd) {
 function startRound() {
   if (availableWords.length === 0) {
     availableWords = shuffle([...allWords]);
-    alert("すべての言葉を使いました！新しくシャッフルしました。");
+    alert("All words used. Reshuffling!");
     round++;
     turn = 1;
   } else {
-    updateCounters();
+    turn++;
+    document.getElementById('turn').innerText = turn;
   }
+
   document.getElementById("hint").innerText = "";
   explainingTeamIndex = lastStartingTeamIndex;
   lastStartingTeamIndex = (explainingTeamIndex + 1) % teams.length;
-  document.getElementById("explaining").innerText = `説明チーム: ${teams[explainingTeamIndex].name}`;
+  document.getElementById("explaining").innerText = `Explaining: ${teams[explainingTeamIndex].name}`;
   currentWord = availableWords.pop();
-  document.getElementById('word').innerText = currentWord;
+  document.getElementById('word').innerText = "***";
 
   guessOrder = [];
   for (let i = 0; i < teams.length; i++) {
     guessOrder.push((explainingTeamIndex + i) % teams.length);
   }
+
   guessIndex = 0;
   highlightCurrentTeam(-1);
-  startTimer(30, () => {
-    guessIndex = 0;
-    nextGuessPhase();
+  startCountdown(() => {
+    document.getElementById('word').innerText = currentWord;
+    startTimer(15, () => {
+      guessIndex = 0;
+      nextGuessPhase();
+    });
   });
+}
+
+function skipWord() {
+  clearInterval(timer);
+  startRound();
 }
 
 function nextGuessPhase() {
   if (guessIndex >= guessOrder.length) {
-    document.getElementById('word').innerText = "どのチームも正解できませんでした";
+    document.getElementById('word').innerText = "No team guessed it!";
     highlightCurrentTeam(-1);
     return;
   }
   const teamIndex = guessOrder[guessIndex];
-  const team = teams[teamIndex];
-  document.getElementById('word').innerText = `→ ${team.name} チームの番`;
+  document.getElementById('word').innerText = `→ ${teams[teamIndex].name}'s turn`;
   highlightCurrentTeam(teamIndex);
-  startTimer(8, () => {
+  startTimer(5, () => {
     guessIndex++;
     nextGuessPhase();
   });
@@ -125,22 +143,19 @@ function nextGuessPhase() {
 function correctAnswer() {
   const teamIndex = guessOrder[guessIndex];
   if (teamIndex !== undefined && teamIndex < teams.length) {
-    const team = teams[teamIndex];
-    team.score++;
+    teams[teamIndex].score++;
     renderTeams();
     clearInterval(timer);
     document.getElementById('correct-sound').play();
     document.getElementById("hint").innerText = "";
-    document.getElementById('word').innerText = `${team.name} チームが正解しました！`;
+    document.getElementById('word').innerText = `${teams[teamIndex].name} guessed right!`;
     highlightCurrentTeam(-1);
-  } else {
-    alert("現在の回答中のチームが見つかりません。");
   }
 }
 
 function showHint() {
   const hint = definitions[currentWord];
-  document.getElementById("hint").innerText = hint ? `Hint: ${hint}` : "Hint: Not available";
+  document.getElementById("hint").innerText = hint ? `Hint: ${hint}` : "Hint not available.";
 }
 
 function hideWord() {
@@ -152,9 +167,15 @@ function hideWord() {
 function addTeam() {
   const name = document.getElementById('newTeamName').value.trim();
   if (!name) return;
-  teams.push({ name, score: 0 });
+  const color = getRandomColor();
+  teams.push({ name, score: 0, color });
   document.getElementById('newTeamName').value = "";
   renderTeams();
+}
+
+function getRandomColor() {
+  const colors = ["#f44336", "#3f51b5", "#009688", "#ff9800", "#9c27b0", "#00bcd4", "#8bc34a"];
+  return colors[teams.length % colors.length];
 }
 
 function renderTeams() {
@@ -163,9 +184,10 @@ function renderTeams() {
   teams.forEach((team, index) => {
     const div = document.createElement('div');
     div.className = 'team';
+    div.style.backgroundColor = team.color;
     div.innerHTML = `
       <div class="team-name">${team.name}</div>
-      <div class="score" id="score-${index}">ポイント: ${team.score}</div>
+      <div class="score" id="score-${index}">Points: ${team.score}</div>
     `;
     teamsDiv.appendChild(div);
   });
@@ -173,30 +195,18 @@ function renderTeams() {
 }
 
 function addPoint() {
-  if (teams.length === 0) return alert("チームを追加してください！");
-  const teamName = prompt("ポイントを追加するチーム名を入力してください：");
-  const team = teams.find(t => t.name === teamName);
+  const name = prompt("Enter team name to add point:");
+  const team = teams.find(t => t.name === name);
   if (team) {
     team.score++;
     renderTeams();
   } else {
-    alert("チームが見つかりません。");
-  }
-}
-
-function updateCounters() {
-  turn++;
-  document.getElementById('turn').innerText = turn;
-  if (turn > allWords.length) {
-    round++;
-    turn = 1;
-    document.getElementById('round').innerText = round;
-    document.getElementById('turn').innerText = turn;
+    alert("Team not found.");
   }
 }
 
 function highlightCurrentTeam(index) {
   document.querySelectorAll('.team').forEach((el, i) => {
-    el.style.backgroundColor = i === index ? '#d1f7c4' : 'white';
+    el.style.outline = i === index ? '4px solid #333' : 'none';
   });
 }
