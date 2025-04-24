@@ -1,5 +1,4 @@
 
-/* Base general */
 body {
   font-family: sans-serif;
   display: flex;
@@ -42,17 +41,10 @@ h1 {
   text-align: center;
 }
 
-button {
-  font-size: 1em;
-  padding: 12px 20px;
-  margin: 6px 4px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  flex: 1 1 auto;
-  max-width: 100%;
+.countdown {
+  font-size: 2em;
+  color: #555;
+  margin: 10px 0;
 }
 
 .button-group {
@@ -60,44 +52,22 @@ button {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  max-width: 100%;
   margin: 10px 0;
 }
 
 .button-group button {
-  flex: 1 1 45%;
-  min-width: 120px;
   font-size: 1em;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  flex: 1 1 45%;
 }
 
 button:hover {
   background-color: #45a049;
-}
-
-#teams {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.team {
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 140px;
-}
-
-.team-name {
-  font-size: 1.1em;
-  margin-bottom: 4px;
-}
-
-.score {
-  font-size: 1.3em;
 }
 
 input[type="text"] {
@@ -109,6 +79,32 @@ input[type="text"] {
   max-width: 90vw;
 }
 
+#teams {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.team {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 140px;
+  text-align: center;
+  color: white;
+}
+
+.team-name {
+  font-size: 1.1em;
+  margin-bottom: 4px;
+}
+
+.score {
+  font-size: 1.3em;
+}
+
 .confetti {
   position: absolute;
   top: 0;
@@ -118,33 +114,18 @@ input[type="text"] {
   z-index: 0;
 }
 
-body.mobile button {
-  font-size: 1.2em;
-  padding: 16px;
-}
-
-/* Responsividad adicional */
 @media (max-width: 600px) {
-  h1 {
-    font-size: 1.5em;
+  .button-group button {
+    font-size: 0.9em;
+    padding: 10px;
+    flex: 1 1 90%;
   }
 
   #word {
-    font-size: 1.8em;
-    padding: 12px 20px;
-  }
-
-  button {
-    font-size: 0.9em;
-    padding: 10px;
+    font-size: 2em;
   }
 
   .team {
     width: 45%;
-    margin: 5px;
-  }
-  .button-group button {
-    flex: 1 1 80%;
-    font-size: 1.1em;
   }
 }
