@@ -88,12 +88,12 @@ function startTimer(seconds, onEnd) {
 
 function startRound() {
   if (teams.length === 0) {
-    alert("Please add at least one team before starting the round.");
+    alert("ラウンドを始めるには、まずチームを1つ以上作ってね！");
     return;
   }
   if (availableWords.length === 0) {
     availableWords = shuffle([...allWords]);
-    alert("All words used. Reshuffling!");
+    alert("すべての単語を使いました。シャッフルします！");
     round++;
     turn = 1;
   } else {
@@ -104,7 +104,7 @@ function startRound() {
   document.getElementById("hint").innerText = "";
   explainingTeamIndex = lastStartingTeamIndex;
   lastStartingTeamIndex = (explainingTeamIndex + 1) % teams.length;
-  document.getElementById("explaining").innerText = `Explaining: ${teams[explainingTeamIndex].name}`;
+  document.getElementById("explaining").innerText = `説明チーム: ${teams[explainingTeamIndex].name}`;
   currentWord = availableWords.pop();
   document.getElementById('word').innerText = "***";
 
@@ -131,7 +131,7 @@ function skipWord() {
 
 function nextGuessPhase() {
   if (guessIndex >= guessOrder.length) {
-    document.getElementById('word').innerText = "No team guessed it!";
+    document.getElementById('word').innerText = "どのチームも正解しませんでした！";
     highlightCurrentTeam(-1);
     return;
   }
@@ -152,14 +152,14 @@ function correctAnswer() {
     clearInterval(timer);
     document.getElementById('correct-sound').play();
     document.getElementById("hint").innerText = "";
-    document.getElementById('word').innerText = `${teams[teamIndex].name} guessed right!`;
+    document.getElementById('word').innerText = `${teams[teamIndex].name} チームが正解しました！`;
     highlightCurrentTeam(-1);
   }
 }
 
 function showHint() {
   const hint = definitions[currentWord];
-  document.getElementById("hint").innerText = hint ? `Hint: ${hint}` : "Hint not available.";
+  document.getElementById("hint").innerText = hint ? `Hint: ${hint}` : "ヒントはありません。";
 }
 
 function hideWord() {
@@ -205,7 +205,7 @@ function addPoint() {
     team.score++;
     renderTeams();
   } else {
-    alert("Team not found.");
+    alert("チームが参加しなかった");
   }
 }
 
