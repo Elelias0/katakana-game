@@ -103,6 +103,11 @@ input[type="text"] {
   z-index: 0;
 }
 
+body.mobile button {
+  font-size: 1.2em;
+  padding: 16px;
+}
+
 /* Responsividad adicional */
 @media (max-width: 600px) {
   h1 {
