@@ -48,7 +48,9 @@ let currentWord = "";
 const teams = [];
 
 // ==== Funciones ====
-
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
 if (isMobileDevice()) {
   document.body.classList.add("mobile");
 }
@@ -180,10 +182,6 @@ function addPoint() {
   } else {
     alert("チームが見つかりません。");
   }
-}
-
-function isMobileDevice() {
-  return /Mobi|Android/i.test(navigator.userAgent);
 }
 
 function updateCounters() {
